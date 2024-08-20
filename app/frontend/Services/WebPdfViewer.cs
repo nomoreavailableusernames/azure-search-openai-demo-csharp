@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
+// Copyright (c) Microsoft. All rights reserved.
 
 namespace ClientApp.Services;
 
@@ -14,7 +14,7 @@ public class WebPdfViewer(IDialogService dialog, ISnackbar snackbar) : IPdfViewe
             new DialogParameters
             {
                 [nameof(PdfViewerDialog.FileName)] = name,
-                [nameof(PdfViewerDialog.BaseUrl)] = url.Replace($"/{name}", ""),
+                [nameof(PdfViewerDialog.BaseUrl)] = url.ToLower().Replace($"/{name}", "").Replace("source:%20", ""),
             },
             new DialogOptions
             {
