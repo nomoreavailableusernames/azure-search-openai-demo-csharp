@@ -1,8 +1,9 @@
-﻿<MudDialog DisableSidePadding="true">
+<MudDialog DisableSidePadding="true">
     <DialogContent>
         <MudContainer Class="pdf-container">
             <div style="@_pdfViewerVisibilityStyle">
-                <iframe id="pdf-viewer" src="@(FileName.ToCitationUrl(BaseUrl))" title="@FileName" />
+                <iframe id="pdf-viewer" src="@(FileName.ToCitationUrl(BaseUrl).ToLower().Replace("source:%20", ""))"
+                    title="@FileName" />
             </div>
             @if (_isLoading)
             {
@@ -17,8 +18,7 @@
         </MudContainer>
     </DialogContent>
     <DialogActions>
-        <MudButton Color="Color.Primary" Size="Size.Large"
-                   StartIcon="@Icons.Material.Filled.Close"
-                   OnClick="@OnCloseClick">Close</MudButton>
+        <MudButton Color="Color.Primary" Size="Size.Large" StartIcon="@Icons.Material.Filled.Close"
+            OnClick="@OnCloseClick">Close</MudButton>
     </DialogActions>
 </MudDialog>
