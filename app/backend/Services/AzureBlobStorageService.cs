@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
+// Copyright (c) Microsoft. All rights reserved.
 
 namespace MinimalApi.Services;
 
@@ -38,10 +38,33 @@ internal sealed class AzureBlobStorageService(BlobContainerClient container)
                 else if (Path.GetExtension(fileName).ToLower() is ".pdf")
                 {
                     using var documents = PdfReader.Open(stream, PdfDocumentOpenMode.Import);
+
+                    //Adding code to also upload original PDF so we have the entire document for reference.
+                    //START NEW CODE FOR UPLOADING ORIGINAL DOCUMENT
+
+                    var blobName = BlobNameFromFilePage(fileName);
+                    var documentName = BlobNameFromFilePage(fileName);
+                    var blobClient = container.GetBlobClient(documentName);
+
+                    if (await blobClient.ExistsAsync(cancellationToken))
+                    {
+                        continue;
+                    }
+
+                    var url = blobClient.Uri.AbsoluteUri;
+                    await using var fileStream = file.OpenReadStream();
+                    await blobClient.UploadAsync(fileStream, new BlobHttpHeaders
+                    {
+                        ContentType = "image"
+                    }, cancellationToken: cancellationToken);
+                    uploadedFiles.Add(blobName);
+
+                    //END NEW CODE FOR UPLOADING ORIGINAL DOCUMENT
+
                     for (int i = 0; i < documents.PageCount; i++)
                     {
-                        var documentName = BlobNameFromFilePage(fileName, i);
-                        var blobClient = container.GetBlobClient(documentName);
+                        documentName = BlobNameFromFilePage(fileName, i);
+                        blobClient = container.GetBlobClient(documentName);
                         if (await blobClient.ExistsAsync(cancellationToken))
                         {
                             continue;
