@@ -11,14 +11,17 @@ resource keyVault 'Microsoft.KeyVault/vaults@2022-07-01' = {
   tags: tags
   properties: {
     tenantId: subscription().tenantId
+    enableSoftDelete: false
     sku: { family: 'A', name: 'standard' }
-    accessPolicies: !empty(principalId) ? [
-      {
-        objectId: principalId
-        permissions: { secrets: [ 'get', 'list' ] }
-        tenantId: subscription().tenantId
-      }
-    ] : []
+    accessPolicies: !empty(principalId)
+      ? [
+          {
+            objectId: principalId
+            permissions: { secrets: ['get', 'list'] }
+            tenantId: subscription().tenantId
+          }
+        ]
+      : []
   }
 }
 
