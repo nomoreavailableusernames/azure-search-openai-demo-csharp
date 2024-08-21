@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft. All rights reserved.
+﻿// Copyright (c) Microsoft. All rights reserved.
 
 namespace MinimalApi.Extensions;
 
@@ -78,19 +78,16 @@ internal static class SearchClientExtensions
         foreach (var doc in searchResult.GetResults())
         {
             doc.Document.TryGetValue("sourcepage", out var sourcePageValue);
-            string? baseUrlValue;
             string? contentValue;
             try
             {
                 if (useSemanticCaptions)
                 {
                     var docs = doc.SemanticSearch.Captions.Select(c => c.Text);
-                    baseUrlValue = string.Join("https://st65r2fo2xbeufi.blob.core.windows.net/content/",sourcePageValue);
                     contentValue = string.Join(" . ", docs);
                 }
                 else
-                {                
-                    baseUrlValue = string.Join("https://st65r2fo2xbeufi.blob.core.windows.net/content/",sourcePageValue);
+                {
                     doc.Document.TryGetValue("content", out var value);
                     contentValue = (string)value;
                 }
@@ -98,14 +95,12 @@ internal static class SearchClientExtensions
             catch (ArgumentNullException)
             {
                 contentValue = null;
-                baseUrlValue = null;
             }
 
-            if (sourcePageValue is string sourcePage && baseUrlValue is string baseUrl && contentValue is string content)
+            if (sourcePageValue is string sourcePage && contentValue is string content)
             {
                 content = content.Replace('\r', ' ').Replace('\n', ' ');
-                baseUrl = string.Join("https://st65r2fo2xbeufi.blob.core.windows.net/content/",sourcePage);
-                sb.Add(new SupportingContentRecord(sourcePage,baseUrl,content));
+                sb.Add(new SupportingContentRecord(sourcePage,content));
             }
         }
 

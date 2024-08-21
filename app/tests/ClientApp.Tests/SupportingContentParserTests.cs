@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft. All rights reserved.
+﻿// Copyright (c) Microsoft. All rights reserved.
 
 using Shared.Models;
 
@@ -14,17 +14,15 @@ public class SupportingContentParserTests
         {
             yield return new object[]
             {
-                new SupportingContentRecord("test.pdf", "url", "blah blah"),
+                new SupportingContentRecord("test.pdf","blah blah"),
                 "test.pdf",
-                "url",
                 "blah blah",
             };
 
             yield return new object[]
             {
-                new SupportingContentRecord("sdp_corporate.pdf", "url", "this is the content that follows"),
+                new SupportingContentRecord("sdp_corporate.pdf", "this is the content that follows"),
                 "sdp_corporate.pdf",
-                "url",
                 "this is the content that follows",
             };
         }
@@ -34,11 +32,10 @@ public class SupportingContentParserTests
     public void SupportingContentCorrectlyParsesText(
         SupportingContentRecord supportingContent,
         string expectedTitle,
-        string expectedBaseUrl,
         string? expectedContent)
     {
         var actual = SupportingContent.ParseSupportingContent(supportingContent);
-        var expected = new ParsedSupportingContentItem(expectedTitle, expectedBaseUrl, expectedContent);
+        var expected = new ParsedSupportingContentItem(expectedTitle, expectedContent);
         Assert.Equal(actual, expected);
     }
 }

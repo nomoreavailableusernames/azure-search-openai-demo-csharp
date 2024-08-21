@@ -2,11 +2,11 @@ name: Validate AZD template
 on:
   workflow_dispatch:
   push:
-    branches: [main]
+    branches: [ main ]
     paths:
       - "infra/**"
   pull_request:
-    branches: [main]
+    branches: [ main ]
     paths:
       - "infra/**"
 
@@ -17,6 +17,7 @@ permissions:
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -26,7 +27,7 @@ jobs:
         uses: azure/CLI@v1
         with:
           inlineScript: az config set bicep.use_binary_from_path=false && az bicep build -f infra/main.bicep --stdout
-
+          
       - name: Run Microsoft Security DevOps Analysis
         uses: microsoft/security-devops-action@preview
         id: msdo
