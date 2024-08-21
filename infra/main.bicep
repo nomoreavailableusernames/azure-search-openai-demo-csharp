@@ -3,7 +3,7 @@ targetScope = 'subscription'
 @description('Name of the environment used to generate a short unique hash for resources.')
 @minLength(1)
 @maxLength(64)
-param environmentName string = ''
+param environmentName string
 
 @description('Primary location for all resources')
 @allowed([
