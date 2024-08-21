@@ -36,7 +36,6 @@ resource account 'Microsoft.CognitiveServices/accounts@2023-05-01' = {
     publicNetworkAccess: publicNetworkAccess
     networkAcls: networkAcls
     disableLocalAuth: true
-    restore: true
   }
   sku: sku
 }
