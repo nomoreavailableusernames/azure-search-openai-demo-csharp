@@ -100,7 +100,7 @@ internal static class SearchClientExtensions
             if (sourcePageValue is string sourcePage && contentValue is string content)
             {
                 content = content.Replace('\r', ' ').Replace('\n', ' ');
-                sb.Add(new SupportingContentRecord(sourcePage,content));
+                sb.Add(new SupportingContentRecord(sourcePage, content));
             }
         }
 

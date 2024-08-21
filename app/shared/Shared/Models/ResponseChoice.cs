@@ -11,7 +11,7 @@ public record SupportingImageRecord(string Title, string Url);
 
 public record DataPoints(
     [property: JsonPropertyName("text")] string[] Text)
-{}
+{ }
 
 public record Thoughts(
     [property: JsonPropertyName("title")] string Title,

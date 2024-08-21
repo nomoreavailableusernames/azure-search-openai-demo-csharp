@@ -85,7 +85,7 @@ public class ReadRetrieveReadChatServiceTest
         var azureSearchIndex = Environment.GetEnvironmentVariable("AZURE_SEARCH_INDEX") ?? throw new InvalidOperationException();
         var azureCredential = new DefaultAzureCredential();
         var azureSearchService = new AzureSearchService(new SearchClient(new Uri(azureSearchServiceEndpoint), azureSearchIndex, azureCredential));
-        
+
         var openAIAPIKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY") ?? throw new InvalidOperationException();
         var openAIClient = new OpenAIClient(openAIAPIKey);
 

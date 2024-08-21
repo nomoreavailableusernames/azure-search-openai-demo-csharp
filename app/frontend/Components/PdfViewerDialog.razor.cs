@@ -1,28 +1,24 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-
-namespace ClientApp.Components;
-
-public sealed partial class PdfViewerDialog
-{
-    private bool _isLoading = true;
-    private string _pdfViewerVisibilityStyle => _isLoading ? "display:none;" : "display:default;";
-
-    [Parameter] public required string FileName { get; set; }
-    [Parameter] public required string BaseUrl { get; set; }
-
-    [CascadingParameter] public required MudDialogInstance Dialog { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        await base.OnInitializedAsync();
-        await JavaScriptModule.RegisterIFrameLoadedAsync(
-            "#pdf-viewer",
-            () =>
+﻿< MudDialog DisableSidePadding = "true" >
+    < DialogContent >
+        < MudContainer Class = "pdf-container" >
+            < div style = "@_pdfViewerVisibilityStyle" >
+                < iframe id = "pdf-viewer" src = "@(FileName.ToCitationUrl(BaseUrl))" title = "@FileName" />
+            </ div >
+            @if(_isLoading)
             {
-                _isLoading = false;
-                StateHasChanged();
-            });
-    }
-
-    private void OnCloseClick() => Dialog.Close(DialogResult.Ok(true));
-}
+                < MudSkeleton Class = "pa-2" />
+                < MudSkeleton Class = "pa-2" SkeletonType = "SkeletonType.Circle" Height = "4rem" Width = "4rem" />
+                < MudSkeleton Class = "pa-2" SkeletonType = "SkeletonType.Rectangle" Height = "12rem" />
+                < MudSkeleton Class = "pa-2" Height = "2rem" />
+                < MudSkeleton Class = "pa-2" Height = "3rem" />
+                < MudSkeleton Class = "pa-2" />
+                < MudSkeleton Class = "pa-2" SkeletonType = "SkeletonType.Rectangle" Height = "12rem" />
+            }
+        </ MudContainer >
+    </ DialogContent >
+    < DialogActions >
+        < MudButton Color = "Color.Primary" Size = "Size.Large"
+                   StartIcon = "@Icons.Material.Filled.Close"
+                   OnClick = "@OnCloseClick" > Close </ MudButton >
+    </ DialogActions >
+</ MudDialog >
