@@ -52,12 +52,26 @@ if ($missingEnvVars.Count -gt 0) {
 
 foreach ($role in $roles) {
     $role = $role.Trim()
-    Log-Message "Creating Azure role assignment for role: $role"
-    & az role assignment create `
+    Log-Message "Checking if Azure role assignment for role: $role already exists"
+
+    $existingAssignment = & az role assignment list `
         --role $role `
         --assignee-object-id $env:AZURE_PRINCIPAL_ID `
         --scope "/subscriptions/$env:AZURE_SUBSCRIPTION_ID/resourceGroups/$env:AZURE_RESOURCE_GROUP" `
-        --assignee-principal-type User
+        --query "[?principalType=='User']" `
+        --output tsv
+
+    if ($existingAssignment) {
+        Log-Message "Role assignment for role: $role already exists. Skipping creation."
+    }
+    else {
+        Log-Message "Creating Azure role assignment for role: $role"
+        & az role assignment create `
+            --role $role `
+            --assignee-object-id $env:AZURE_PRINCIPAL_ID `
+            --scope "/subscriptions/$env:AZURE_SUBSCRIPTION_ID/resourceGroups/$env:AZURE_RESOURCE_GROUP" `
+            --assignee-principal-type User
+    }
 }
 
 Log-Message "Script finished."

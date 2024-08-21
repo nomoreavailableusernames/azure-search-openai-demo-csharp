@@ -53,12 +53,25 @@ IFS='
 '
 for role in $roles; do
     role=$(echo "$role" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
-    log_message "Creating Azure role assignment for role: $role"
-    az role assignment create \
+    log_message "Checking if Azure role assignment for role: $role already exists"
+
+    existing_assignment=$(az role assignment list \
         --role "$role" \
         --assignee-object-id "$AZURE_PRINCIPAL_ID" \
         --scope "/subscriptions/$AZURE_SUBSCRIPTION_ID/resourceGroups/$AZURE_RESOURCE_GROUP" \
-        --assignee-principal-type User
+        --query "[?principalType=='User']" \
+        --output tsv)
+
+    if [ -n "$existing_assignment" ]; then
+        log_message "Role assignment for role: $role already exists. Skipping creation."
+    else
+        log_message "Creating Azure role assignment for role: $role"
+        az role assignment create \
+            --role "$role" \
+            --assignee-object-id "$AZURE_PRINCIPAL_ID" \
+            --scope "/subscriptions/$AZURE_SUBSCRIPTION_ID/resourceGroups/$AZURE_RESOURCE_GROUP" \
+            --assignee-principal-type User
+    fi
 done
 
 log_message "Script finished."
