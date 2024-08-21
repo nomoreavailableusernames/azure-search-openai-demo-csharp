@@ -34,7 +34,8 @@ env:
   AZURE_KEY_VAULT_RESOURCE_GROUP: ${{ vars.AZURE_KEY_VAULT_RESOURCE_GROUP }}
   AZURE_REDIS_CACHE: ${{ vars.AZURE_REDIS_CACHE }}
   AZURE_REDIS_CACHE_RESOURCE_GROUP: ${{ vars.AZURE_REDIS_CACHE_RESOURCE_GROUP }}
-  AZURE_PRINCIPAL_TYPE: 'ServicePrincipal'
+  AZURE_PRINCIPAL_TYPE: "ServicePrincipal"
+  AZURE_ENV_NAME: ${{ vars.AZURE_ENV_NAME }}
 
 jobs:
   build:
@@ -45,12 +46,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        
-      - name: 'Print manual run reason'
+
+      - name: "Print manual run reason"
         if: ${{ github.event_name == 'workflow_dispatch' }}
         run: |
           echo 'Reason: ${{ github.event.inputs.reason }}'
-        
+
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
