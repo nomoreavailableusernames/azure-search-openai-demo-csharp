@@ -35,7 +35,6 @@ env:
   AZURE_REDIS_CACHE: ${{ vars.AZURE_REDIS_CACHE }}
   AZURE_REDIS_CACHE_RESOURCE_GROUP: ${{ vars.AZURE_REDIS_CACHE_RESOURCE_GROUP }}
   AZURE_PRINCIPAL_TYPE: "ServicePrincipal"
-  AZURE_ENV_NAME: ${{ vars.AZURE_ENV_NAME }}
 
 jobs:
   build:
@@ -87,6 +86,7 @@ jobs:
           AZURE_LOCATION: ${{ vars.AZURE_LOCATION }}
           AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
           AZURE_TAGS: ${{ secrets.AZURE_TAGS }}
+          AZD_INITIAL_ENVIRONMENT_CONFIG: ${{ secrets.AZD_INITIAL_ENVIRONMENT_CONFIG }}
 
       - name: Deploy Application
         run: azd deploy --no-prompt --debug
