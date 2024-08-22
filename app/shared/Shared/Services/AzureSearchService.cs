@@ -83,7 +83,7 @@ public class AzureSearchService(SearchClient searchClient) : ISearchService
         foreach (var doc in searchResult.GetResults())
         {
             doc.Document.TryGetValue("sourcepage", out var sourcePageValue);
-            string baseUrlValue;
+            string? baseUrlValue;
             string? contentValue;
             try
             {
