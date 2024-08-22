@@ -4,19 +4,18 @@ name: Trigger auto deployment for ca-web-yxbuwmswtbugu
 on:
   # Automatically trigger it when detected changes in repo
   push:
-    branches: 
-      [ main ]
+    branches: [main]
     paths:
-    - '**'
-    - '.github/workflows/ca-web-yxbuwmswtbugu-AutoDeployTrigger-559caf11-e7ee-4832-979b-fcaac6774d49.yml'
+      - "**"
+      - ".github/workflows/ca-web-yxbuwmswtbugu-AutoDeployTrigger-559caf11-e7ee-4832-979b-fcaac6774d49.yml"
 
-  # Allow manual trigger 
-  workflow_dispatch:      
+  # Allow manual trigger
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    permissions: 
+    permissions:
       id-token: write #This is required for requesting the OIDC JWT Token
       contents: read #Required when GH token is used to authenticate with private repo
 
@@ -34,14 +33,10 @@ jobs:
       - name: Build and push container image to registry
         uses: azure/container-apps-deploy-action@v2
         with:
-          appSourcePath: ${{ github.workspace }} 
+          appSourcePath: ${{ github.workspace }}
           registryUrl: cryxbuwmswtbugu.azurecr.io
           registryUsername: ${{ secrets.CAWEBYXBUWMSWTBUGU_REGISTRY_USERNAME }}
           registryPassword: ${{ secrets.CAWEBYXBUWMSWTBUGU_REGISTRY_PASSWORD }}
           containerAppName: ca-web-yxbuwmswtbugu
           resourceGroup: rg-azure-search-openai-demo-csharp
           imageToBuild: cryxbuwmswtbugu.azurecr.io/ca-web-yxbuwmswtbugu:${{ github.sha }}
-          _buildArgumentsKey_: |
-            _buildArgumentsValues_
-
-
