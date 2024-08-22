@@ -5,8 +5,11 @@
         {
             continue;
         }
-
-        var (title, content) = value;
+        //TEST
+        //var config = IConfiguration
+        //var endpoint = config.GetStorageAccountEndpoint();
+        //var storageUrl = Microsoft.Extensions.Configuration.ConfigurationExtensions.ToCitationBaseUrl();
+        var (title, baseUrl, content) = value;
         var last = index == _supportingContent.Length - 1;
         if (index is not 0 && last is false)
         {
@@ -14,7 +17,12 @@
         }
 
         <MudListItem>
-            <MudText Typo="Typo.subtitle1" Class="pb-2" Style="font-weight: bold;" Color="Color.Primary">@title</MudText>
+            <MudNavLink Typo="Typo.subtitle1" Class="pb-2" Style="font-weight: bold;" Color="Color.Primary"
+                Href="@(string.Join("https://st65r2fo2xbeufi.blob.core.windows.net/content/",title))" aria-label="@title"
+                Icon="@Icons.Custom.FileFormats.FileDocument">
+                @title
+            </MudNavLink>
+            <!--<MudText Typo="Typo.subtitle1" Class="pb-2" Style="font-weight: bold;" Color="Color.Primary">@title</MudText>-->
             <MudText Typo="Typo.body1">@((MarkupString)content!)</MudText>
         </MudListItem>
     }
@@ -38,4 +46,4 @@
             <MudImage Src="@url" Alt="@title" Height="400" />
         </MudListItem>
     }
-</MudList>
+    </MudList>
