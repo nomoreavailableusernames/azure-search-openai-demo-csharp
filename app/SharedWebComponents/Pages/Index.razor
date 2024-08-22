@@ -2,8 +2,9 @@
 
 <PageTitle>Home</PageTitle>
 
+
 <MudCard Elevation="24">
-    <MudCardHeader>
+    <!--<MudCardHeader>
         <CardHeaderAvatar>
             <MudAvatar Color="Color.Info" Size="Size.Large">
                 <MudIcon Icon="@Icons.Custom.Brands.MicrosoftAzure" Size="Size.Large" />
@@ -18,9 +19,9 @@
             </MudText>
             <MudText Typo="Typo.h6">Blazor 💜 OpenAI</MudText>
         </CardHeaderContent>
-    </MudCardHeader>
+    </MudCardHeader>-->
     <MudCardContent>
-        <MudCarousel Class="mud-width-full"
+        <!--<MudCarousel Class="mud-width-full"
                      BulletsColor="Color.Primary" Style="height: 58vh;"
                      AutoCycle="true" TData="Image" Context="image"
                      ItemsSource=@_images AutoCycleTime=@TimeSpan.FromSeconds(3)>
@@ -31,36 +32,129 @@
                 </div>
             </ItemTemplate>
         </MudCarousel>
-        <div class="full-width pt-6 text-align-center">
-            <MudText Typo="Typo.caption">
-                These photo were created using generative AI
-                <MudLink Href="https://www.bing.com/images/create/" Target="_blank" 
-                         Class="mud-typography-caption mud-secondary-text"
-                         aria-label="Microsoft Bing Create link.">
-                    Bing - Image Creator (powered by DALL-E)
-                </MudLink>
-            </MudText>
+        -->
+        <style>
+            .container {
+                width: 80%;
+                margin: auto;
+                overflow: hidden;
+            }
+
+            .main-header {
+                text-align: center;
+                background-color: var(--mud-palette-primary);
+                color: white;
+                padding: 10px 0;
+            }
+
+            .content-section {
+                margin: 20px 0;
+            }
+
+            .content-section h2 {
+                color: var(--mud-palette-primary);
+            }
+
+            .content-section p {
+                margin: 10px 0;
+            }
+
+            .footer {
+                text-align: left;
+                padding: 20px 20px;
+                background-color: #f4f4f4;
+            }
+        </style>
+        <div>
+            <MudText Typo="Typo.inherit"></MudText>
+        </div>
+        <div class="full-width pt-6 text-align-left">
+            <MudFocusTrap Disabled="true">
+                <MudText Typo="Typo.inherit">
+                    <header class="main-header" focusable="false">
+                        <h1 focusable="false">Transforming Accountability with Azure Copilot</h1>
+                    </header>
+                    <div class="container">
+                        <section class="content-section">
+                            <h2>Unleash the Power of AI</h2>
+                            <ul>
+                                <li>Advanced Analytics: Dive into the depths of data with Azure Copilot's advanced
+                                    analytics.
+                                    Uncover insights that drive smarter decisions and stronger oversight.</li>
+                                <li>
+                                    Automated Efficiency: Free your workforce from the mundane. Automate routine tasks
+                                    and
+                                    redirect focus to strategic initiatives that matter.</li>
+                            </ul>
+                        </section>
+                        <section class="content-section">
+                            <h2>Secure, Compliant, and Trustworthy</h2>
+                            <ul>
+                                <li>Ironclad Security: With Azure Copilot, data security is paramount. Operate with
+                                    confidence,
+                                    knowing your sensitive information is protected by the most robust security
+                                    measures.
+                                </li>
+                                <li>Compliance Mastery: Navigate the complex landscape of federal regulations with ease.
+                                    Azure
+                                    Copilot is designed to comply with all pertinent government standards.</li>
+                            </ul>
+                        </section>
+                        <section class="content-section">
+                            <h2>Collaboration Without Borders</h2>
+                            <ul>
+                                <li>Unified Platform: Break down silos and foster a culture of collaboration. Azure
+                                    Copilot's
+                                    unified platform ensures seamless sharing of information across all levels of
+                                    government.
+                                </li>
+                                <li>Public Engagement: Engage with citizens like never before. Make transparency a
+                                    reality by
+                                    providing accessible insights into government operations.</li>
+
+                            </ul>
+                        </section>
+                        <section class="content-section">
+                            <h2>A Partner in Progress</h2>
+                            <ul>
+                                <li>Continuous Innovation: The GAO and Azure Copilot share a commitment to continuous
+                                    improvement. Together, we can redefine what it means to be accountable to the
+                                    public.
+                                </li>
+                                <li>Scalable Solutions: Whether you're auditing a small program or a massive federal
+                                    initiative,
+                                    Azure Copilot scales to meet your needs without skipping a beat.</li>
+                            </ul>
+                        </section>
+                        <footer class="footer">
+                            <p>Choose Azure Copilot. Embrace the future of governance with Azure Copilot. Let's partner
+                                to
+                                ensure the GAO remains a symbol of trust and efficiency for every American. With Azure
+                                Copilot, accountability isn't just a mandate; it's a promise delivered.</p>
+                        </footer>
+                    </div>
+                </MudText>
+            </MudFocusTrap>
         </div>
     </MudCardContent>
+    <!--
     <MudCardActions>
         <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Size="Size.Large" Target="_blank"
-                       aria-label="Azure SDK for .NET link."
-                       Href="https://github.com/Azure/azure-sdk-for-net"
-                       Title="GitHub link for the Azure .NET SDK." />
+            aria-label="Azure SDK for .NET link." Href="https://github.com/Azure/azure-sdk-for-net"
+            Title="GitHub link for the Azure .NET SDK." />
         <MudIconButton Icon="@Icons.Material.Filled.GetApp" Size="Size.Large" Target="_blank"
-                       aria-label="Azure.AI.OpenAI .NET NuGet link."
-                       Href="https://www.nuget.org/packages/Azure.AI.OpenAI" 
-                       Title="NuGet link for Azure.AI.OpenAI." />
+            aria-label="Azure.AI.OpenAI .NET NuGet link." Href="https://www.nuget.org/packages/Azure.AI.OpenAI"
+            Title="NuGet link for Azure.AI.OpenAI." />
         <MudIconButton Icon="@Icons.Custom.Brands.Microsoft" Size="Size.Large" Target="_blank"
-                       aria-label="Microsoft Learn link for Azure OpenAI."
-                       Href="https://learn.microsoft.com/azure/cognitive-services/openai"
-                       Title="Microsoft Learn link for Azure OpenAI." />
+            aria-label="Microsoft Learn link for Azure OpenAI."
+            Href="https://learn.microsoft.com/azure/cognitive-services/openai"
+            Title="Microsoft Learn link for Azure OpenAI." />
         <MudSpacer />
         <MudIconButton Icon="@Icons.Custom.Brands.MudBlazor" Size="Size.Large" Target="_blank"
-                       aria-label="MudBlazor (Blazor component library) link."
-                       Href="https://www.mudblazor.com/" Title="MudBlazor Component Library link." />
+            aria-label="MudBlazor (Blazor component library) link." Href="https://www.mudblazor.com/"
+            Title="MudBlazor Component Library link." />
         <MudIconButton Icon="@Icons.Material.Filled.Html" Size="Size.Large" Target="_blank"
-                       aria-label="Markdig (GitHub repository) link."
-                       Href="https://github.com/xoofx/markdig" Title="Markdig GitHub repo link." />
-    </MudCardActions>
+            aria-label="Markdig (GitHub repository) link." Href="https://github.com/xoofx/markdig"
+            Title="Markdig GitHub repo link." />
+    </MudCardActions>-->
 </MudCard>
