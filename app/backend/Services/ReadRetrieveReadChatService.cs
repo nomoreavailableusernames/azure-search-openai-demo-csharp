@@ -110,7 +110,7 @@ standard plan AND dental AND employee benefit.
         }
         else
         {
-            documentContents = string.Join("\r", documentContentList.Select(x =>$"{x.Title}:{x.Content}"));
+            documentContents = string.Join("\r", documentContentList.Select(x => $"{x.Title}:{x.Content}"));
         }
 
         // step 2.5
@@ -140,7 +140,7 @@ standard plan AND dental AND employee benefit.
             }
         }
 
-        
+
         if (images != null)
         {
             var prompt = @$"## Source ##
@@ -231,7 +231,7 @@ e.g.
 
         var responseMessage = new ResponseMessage("assistant", ans);
         var responseContext = new ResponseContext(
-            DataPointsContent: documentContentList.Select(x => new SupportingContentRecord(x.Title, x.Content)).ToArray(),
+            DataPointsContent: documentContentList.Select(x => new SupportingContentRecord(x.Title, x.BaseUrl, x.Content)).ToArray(),
             DataPointsImages: images?.Select(x => new SupportingImageRecord(x.Title, x.Url)).ToArray(),
             FollowupQuestions: followUpQuestionList ?? Array.Empty<string>(),
             Thoughts: new[] { new Thoughts("Thoughts", thoughts) });

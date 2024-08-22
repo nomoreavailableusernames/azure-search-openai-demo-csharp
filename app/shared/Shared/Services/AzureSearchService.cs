@@ -83,29 +83,34 @@ public class AzureSearchService(SearchClient searchClient) : ISearchService
         foreach (var doc in searchResult.GetResults())
         {
             doc.Document.TryGetValue("sourcepage", out var sourcePageValue);
+            string baseUrlValue;
             string? contentValue;
             try
             {
                 if (useSemanticCaptions)
                 {
                     var docs = doc.SemanticSearch.Captions.Select(c => c.Text);
+                    baseUrlValue = string.Join("https://st65r2fo2xbeufi.blob.core.windows.net/content/", sourcePageValue);
                     contentValue = string.Join(" . ", docs);
                 }
                 else
                 {
                     doc.Document.TryGetValue("content", out var value);
+                    baseUrlValue = string.Join("https://st65r2fo2xbeufi.blob.core.windows.net/content/", sourcePageValue);
                     contentValue = (string)value;
                 }
             }
             catch (ArgumentNullException)
             {
                 contentValue = null;
+                baseUrlValue = null;
             }
 
-            if (sourcePageValue is string sourcePage && contentValue is string content)
+            if (sourcePageValue is string sourcePage && baseUrlValue is string baseUrl && contentValue is string content)
             {
                 content = content.Replace('\r', ' ').Replace('\n', ' ');
-                sb.Add(new SupportingContentRecord(sourcePage, content));
+                baseUrl = string.Join("https://st65r2fo2xbeufi.blob.core.windows.net/content/", sourcePageValue);
+                sb.Add(new SupportingContentRecord(sourcePage, baseUrl, content));
             }
         }
 

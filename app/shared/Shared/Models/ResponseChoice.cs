@@ -5,7 +5,7 @@ using Azure.AI.OpenAI;
 
 namespace Shared.Models;
 
-public record SupportingContentRecord(string Title, string Content);
+public record SupportingContentRecord(string Title, string BaseUrl, string Content);
 
 public record SupportingImageRecord(string Title, string Url);
 
@@ -26,7 +26,7 @@ public record ResponseContext(
     [property: JsonPropertyName("thoughts")] Thoughts[] Thoughts)
 {
     [JsonPropertyName("data_points")]
-    public DataPoints DataPoints { get => new DataPoints(DataPointsContent?.Select(x => $"{x.Title}: {x.Content}").ToArray() ?? Array.Empty<string>()); }
+    public DataPoints DataPoints { get => new DataPoints(DataPointsContent?.Select(x => $"{x.Title}: {x.BaseUrl}: {x.Content}").ToArray() ?? Array.Empty<string>()); }
 
     public string ThoughtsString { get => string.Join("\n", Thoughts.Select(x => $"{x.Title}: {x.Description}")); }
 }
