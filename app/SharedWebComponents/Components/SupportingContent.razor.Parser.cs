@@ -10,16 +10,19 @@ public sealed partial class SupportingContent
         // Example: "sdp_corporate.pdf: this is the content that follows".
         var title = item.Title;
         var content = item.Content;
+        var baseUrl = item.BaseUrl;
 
-        return new ParsedSupportingContentItem(title, content.Trim());
+        return new ParsedSupportingContentItem(title, baseUrl, content.Trim());
     }
 }
 
 internal readonly record struct ParsedSupportingContentItem(
     string Title,
+    string? BaseUrl = null,
     string? Content = null)
 {
     internal bool IsEmpty =>
         string.IsNullOrWhiteSpace(Title) ||
+        string.IsNullOrWhiteSpace(BaseUrl) ||
         string.IsNullOrWhiteSpace(Content);
 }
