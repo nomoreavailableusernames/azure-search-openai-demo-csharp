@@ -8,7 +8,7 @@
         //TEST
         //var config = IConfiguration
         //var endpoint = config.GetStorageAccountEndpoint();
-        //var storageUrl = Microsoft.Extensions.Configuration.ConfigurationExtensions.ToCitationBaseUrl();
+        var storageUrl = Microsoft.Extensions.Configuration.ConfigurationExtensions.ToCitationBaseUrl();
         var (title, baseUrl, content) = value;
         var last = index == _supportingContent.Length - 1;
         if (index is not 0 && last is false)
@@ -28,6 +28,7 @@
                 Icon="@Icons.Custom.FileFormats.FileDocument">
                  @title
                  @(string.Join("https://st65r2fo2xbeufi.blob.core.windows.net/content/",title))
+                 storageUrl
             </MudNavLink>
             </MudTooltip>
             <!--<MudText Typo="Typo.subtitle1" Class="pb-2" Style="font-weight: bold;" Color="Color.Primary">@title</MudText>-->
