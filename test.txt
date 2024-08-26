@@ -1,0 +1,15 @@
+using Azure.Identity;
+using Microsoft.Extensions.Configuration;
+
+public static class KeyVaultConfigurationBuilderExtensions
+{
+    public static IConfigurationBuilder AddAzureKeyVault(this IConfigurationBuilder builder, string keyVaultName)
+    {
+        var azureKeyVaultEndpoint = Environment.GetEnvironmentVariable("AZURE_KEY_VAULT_ENDPOINT") ?? throw new InvalidOperationException("Azure Key Vault endpoint is not set.");
+        ArgumentNullException.ThrowIfNullOrEmpty(azureKeyVaultEndpoint);
+
+        var keyVaultUri = new Uri(azureKeyVaultEndpoint);
+        builder.AddAzureKeyVault(keyVaultUri, new DefaultAzureCredential());
+        return builder;
+    }
+}
