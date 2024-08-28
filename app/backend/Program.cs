@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 
 using Microsoft.AspNetCore.Antiforgery;
+using MinimalApi.Hubs;
+; // Replace 'YourNamespace' with the actual namespace of the 'GridEventsHub' class
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddOutputCache();
 builder.Services.AddControllersWithViews();
+builder.Services.AddControllers();
+builder.Services.AddSignalR();
 builder.Services.AddRazorPages();
 builder.Services.AddCrossOriginResourceSharing();
 builder.Services.AddAzureServices();
@@ -52,7 +56,7 @@ else
             """;
         options.InstanceName = "content";
 
-        
+
     });
 
     // set application telemetry
@@ -64,6 +68,12 @@ else
         });
     }
 }
+
+builder.Services.AddScoped(sp =>
+    new HttpClient
+    {
+        BaseAddress = new Uri(builder.Configuration["FrontendUrl"] ?? "https://localhost:5002")
+    });
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
@@ -95,6 +105,12 @@ app.Use(next => context =>
     context.Response.Cookies.Append("XSRF-TOKEN", tokens?.RequestToken ?? string.Empty, new CookieOptions() { HttpOnly = false });
     return next(context);
 });
+
+app.MapHub<GridEventsHub>("/hubs/gridevents");
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
 app.MapFallbackToFile("index.html");
 
 app.MapApi();
