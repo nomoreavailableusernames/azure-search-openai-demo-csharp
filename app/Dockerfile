@@ -69,6 +69,7 @@ ENV SERVICE_FUNCTION_IDENTITY_PRINCIPAL_ID="3bd0ae1a-3bdb-42c7-809a-48d9cc9a2e61
 ENV SERVICE_WEB_IDENTITY_NAME="id-web-yxbuwmswtbugu"
 ENV SERVICE_WEB_IMAGE_NAME="cryxbuwmswtbugu.azurecr.io/azure-search-openai-demo-csharp/web-azure-search-openai-demo-csharp:azd-deploy-1724348205"
 ENV SERVICE_WEB_NAME="ca-web-yxbuwmswtbugu"
+ENV SERVICE_WEBROOT_PATH="/app"
 ENV SERVICE_WEB_RESOURCE_EXISTS="false"
 ENV USE_AOAI="true"
 ENV USE_VISION="false"

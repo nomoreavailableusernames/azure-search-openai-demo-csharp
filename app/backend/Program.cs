@@ -2,11 +2,21 @@
 
 using Microsoft.AspNetCore.Antiforgery;
 using MinimalApi.Hubs;
-; // Replace 'YourNamespace' with the actual namespace of the 'GridEventsHub' class
+// Replace 'YourNamespace' with the actual namespace of the 'GridEventsHub' class
 
-var builder = WebApplication.CreateBuilder(args);
 
-builder.Configuration.ConfigureAzureKeyVault();
+var webAppOptions = new WebApplicationOptions()
+{
+    Args = args,
+    EnvironmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"),
+    ApplicationName = "MinimalApi",
+    ContentRootPath = Directory.GetCurrentDirectory(),
+    WebRootPath = Path.Combine(Directory.GetCurrentDirectory(), "app/frontend/wwwroot")
+};
+
+var builder = WebApplication.CreateBuilder(webAppOptions);
+
+//builder.Configuration.ConfigureAzureKeyVault();
 
 // See: https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -20,6 +30,9 @@ builder.Services.AddCrossOriginResourceSharing();
 builder.Services.AddAzureServices();
 builder.Services.AddAntiforgery(options => { options.HeaderName = "X-CSRF-TOKEN-HEADER"; options.FormFieldName = "X-CSRF-TOKEN-FORM"; });
 builder.Services.AddHttpClient();
+
+//builder.WebHost.UseWebRoot(String.Format("{0}/{1}/wwwroot", builder.Configuration["SERVICE_WEBROOT_PATH"], "frontend"));
+//builder.WebHost.UseWebRoot("/app/frontend/wwwroot");
 
 if (builder.Environment.IsDevelopment())
 {

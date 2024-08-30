@@ -1,5 +1,7 @@
 ﻿@inherits LayoutComponentBase
 
+@inject ISnackbar Snackbar
+
 <MudThemeProvider @bind-IsDarkMode="@_isDarkTheme" Theme="MyCustomTheme" />
 
 @code {
@@ -91,3 +93,12 @@
         </MudMainContent>
     </MudLayout>
 </MudRTLProvider>
+
+<MudButton OnClick="ShowSnackbar">Show Snackbar</MudButton>
+
+@code {
+    private void ShowSnackbar()
+    {
+        Snackbar.Add("This is a toast notification!", Severity.Success);
+    }
+}
