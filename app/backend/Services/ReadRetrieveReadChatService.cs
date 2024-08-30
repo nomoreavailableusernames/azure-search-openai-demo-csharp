@@ -15,15 +15,20 @@ public class ReadRetrieveReadChatService
     private readonly IConfiguration _configuration;
     private readonly IComputerVisionService? _visionService;
     private readonly TokenCredential? _tokenCredential;
+    private readonly ILogger<ReadRetrieveReadChatService> _logger;
 
     public ReadRetrieveReadChatService(
         ISearchService searchClient,
+        Kernel kernel,
+        ILogger<ReadRetrieveReadChatService> logger,
         OpenAIClient client,
         IConfiguration configuration,
         IComputerVisionService? visionService = null,
         TokenCredential? tokenCredential = null)
     {
         _searchClient = searchClient;
+        _kernel = kernel ?? throw new ArgumentNullException(nameof(kernel));
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         var kernelBuilder = Kernel.CreateBuilder();
 
         if (configuration["UseAOAI"] == "false")
@@ -76,7 +81,16 @@ public class ReadRetrieveReadChatService
         string[]? followUpQuestionList = null;
         if (overrides?.RetrievalMode != RetrievalMode.Text && embedding is not null)
         {
-            embeddings = (await embedding.GenerateEmbeddingAsync(question, cancellationToken: cancellationToken)).ToArray();
+            try
+            {
+                embeddings = (await embedding.GenerateEmbeddingAsync(question, cancellationToken: cancellationToken)).ToArray();
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                _logger.LogError(ex, "Failed to generate embeddings");
+                throw;
+            }
         }
 
         // step 1

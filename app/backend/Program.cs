@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 
 using Microsoft.AspNetCore.Antiforgery;
+using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 using MinimalApi.Hubs;
 // Replace 'YourNamespace' with the actual namespace of the 'GridEventsHub' class
 
@@ -87,6 +88,8 @@ builder.Services.AddScoped(sp =>
     {
         BaseAddress = new Uri(builder.Configuration["FrontendUrl"] ?? "https://localhost:5002")
     });
+
+StaticWebAssetsLoader.UseStaticWebAssets(builder.Environment, builder.Configuration);
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment())

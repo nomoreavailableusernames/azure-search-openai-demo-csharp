@@ -1,10 +1,17 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 
+using Azure.Core;
+using Microsoft.SemanticKernel.ChatCompletion;
+using Microsoft.SemanticKernel.Connectors.OpenAI;
+using Microsoft.SemanticKernel.Embeddings;
+
 namespace MinimalApi.Extensions;
 
 internal static class ServiceCollectionExtensions
 {
     private static readonly DefaultAzureCredential s_azureCredential = new();
+    //private readonly ILogger<ReadRetrieveReadChatService> _logger;
+    //private readonly TokenCredential? _tokenCredential;
 
     internal static IServiceCollection AddAzureServices(this IServiceCollection services)
     {
@@ -82,18 +89,36 @@ internal static class ServiceCollectionExtensions
             var useVision = config["UseVision"] == "true";
             var openAIClient = sp.GetRequiredService<OpenAIClient>();
             var searchClient = sp.GetRequiredService<ISearchService>();
+
+            TokenCredential? tokenCredential = null;
+            var logger = sp.GetRequiredService<ILogger<ReadRetrieveReadChatService>>();
+
+            var deployedModelName = config["AzureOpenAiChatGptDeployment"];
+            ArgumentNullException.ThrowIfNullOrWhiteSpace(deployedModelName);
+            var embeddingModelName = config["AzureOpenAiEmbeddingDeployment"];
+            var kernelBuilder = Kernel.CreateBuilder();
+            var kernel = kernelBuilder.Build();
+
+            if (!string.IsNullOrEmpty(embeddingModelName))
+            {
+                var endpoint = config["AzureOpenAiServiceEndpoint"];
+                ArgumentNullException.ThrowIfNullOrWhiteSpace(endpoint);
+                kernelBuilder = kernelBuilder.AddAzureOpenAITextEmbeddingGeneration(embeddingModelName, endpoint, tokenCredential ?? new DefaultAzureCredential());
+                kernelBuilder = kernelBuilder.AddAzureOpenAIChatCompletion(deployedModelName, endpoint, tokenCredential ?? new DefaultAzureCredential());
+            }
+
             if (useVision)
             {
                 var azureComputerVisionServiceEndpoint = config["AzureComputerVisionServiceEndpoint"];
                 ArgumentNullException.ThrowIfNullOrEmpty(azureComputerVisionServiceEndpoint);
                 var httpClient = sp.GetRequiredService<IHttpClientFactory>().CreateClient();
-                
+
                 var visionService = new AzureComputerVisionService(httpClient, azureComputerVisionServiceEndpoint, s_azureCredential);
-                return new ReadRetrieveReadChatService(searchClient, openAIClient, config, visionService, s_azureCredential);
+                return new ReadRetrieveReadChatService(searchClient, kernel, logger, openAIClient, config, visionService, s_azureCredential);
             }
             else
             {
-                return new ReadRetrieveReadChatService(searchClient, openAIClient, config, tokenCredential: s_azureCredential);
+                return new ReadRetrieveReadChatService(searchClient, kernel, logger, openAIClient, config, tokenCredential: s_azureCredential);
             }
         });
 

@@ -22,10 +22,10 @@
         <Nullable>enable</Nullable>
 
         <!-- Display name -->
-        <ApplicationTitle>Blazor OpenAI</ApplicationTitle>
+        <ApplicationTitle>GAO Chat</ApplicationTitle>
 
         <!-- App Identifier -->
-        <ApplicationId>com.companyname.mauiblazor</ApplicationId>
+        <ApplicationId>com.microsoft.mauiblazor</ApplicationId>
 
         <!-- Versions -->
         <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>

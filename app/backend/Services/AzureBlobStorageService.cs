@@ -55,7 +55,7 @@ internal sealed class AzureBlobStorageService(BlobContainerClient container)
                     await using var fileStream = file.OpenReadStream();
                     await blobClient.UploadAsync(fileStream, new BlobHttpHeaders
                     {
-                        ContentType = "image"
+                        ContentType = "pdf"
                     }, cancellationToken: cancellationToken);
                     uploadedFiles.Add(blobName);
 

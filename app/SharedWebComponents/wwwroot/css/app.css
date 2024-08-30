@@ -97,13 +97,15 @@ ol > li {
     stroke-width: 0.6rem;
     transform-origin: 50% 50%;
     transform: rotate(-90deg);
+    font-family: "Roboto", "Helvetica", "Arial", "sans-serif";
 }
 
 .loading-progress circle:last-child {
-    stroke: #1b6ec2;
+    stroke: #0d0c34;
     stroke-dasharray: calc(3.141 * var(--blazor-load-percentage, 0%) * 0.8),
         500%;
     transition: stroke-dasharray 0.05s ease-in-out;
+    font-family: "Roboto", "Helvetica", "Arial", "sans-serif";
 }
 
 .loading-progress-text {
@@ -111,10 +113,12 @@ ol > li {
     text-align: center;
     font-weight: bold;
     inset: calc(20vh + 3.25rem) 0 auto 0.2rem;
+    font-family: "Roboto", "Helvetica", "Arial", "sans-serif";
 }
 
 .loading-progress-text:after {
     content: var(--blazor-load-percentage-text, "Loading");
+    font-family: "Roboto", "Helvetica", "Arial", "sans-serif";
 }
 
 .rtl-lang {
