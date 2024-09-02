@@ -44,7 +44,7 @@ internal sealed class AzureBlobStorageService(BlobContainerClient container)
 
                     var blobName = BlobNameFromFilePage(fileName);
                     var documentName = BlobNameFromFilePage(fileName);
-                    var blobClient = container.GetBlobClient(documentName);
+                    var blobClient = container.GetBlobClient(fileName);
 
                     if (await blobClient.ExistsAsync(cancellationToken))
                     {

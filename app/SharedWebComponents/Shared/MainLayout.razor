@@ -49,6 +49,7 @@
                 </MudTooltip>
             }
             <MudSpacer />
+            <MudButton OnClick="ShowSnackbar">Show Snackbar</MudButton>
             @if (SettingsDisabled is false)
             {
                 <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Inherit" Size="Size.Large"
@@ -89,12 +90,10 @@
                     </CascadingValue>
                 </CascadingValue>
             </MudContainer>
-            <SettingsPanel @ref="_settingsPanel" @bind-Open="@_settingsOpen" />
+            <SettingsPanel ref="_settingsPanel" bind-Open="@_settingsOpen" />
         </MudMainContent>
     </MudLayout>
 </MudRTLProvider>
-
-<MudButton OnClick="ShowSnackbar">Show Snackbar</MudButton>
 
 @code {
     private void ShowSnackbar()

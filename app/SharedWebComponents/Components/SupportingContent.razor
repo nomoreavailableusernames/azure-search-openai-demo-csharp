@@ -20,15 +20,15 @@
         var fullPath = $"{baseUrl}/{title}.pdf"; // Adjust the extension as needed
 
         //@(string.Join("https://st65r2fo2xbeufi.blob.core.windows.net/content/",title))
-        
+
         <MudListItem>
             <MudTooltip Text="@fullPath">
-            <MudNavLink Typo="Typo.subtitle1" Class="pb-2" Style="font-weight: bold;" Color="Color.Primary"
-                Href="@(string.Join("https://st65r2fo2xbeufi.blob.core.windows.net/content/",title))" aria-label="@title"
-                Icon="@Icons.Custom.FileFormats.FileDocument">
-                 @title
-                 @fullPath
-            </MudNavLink>
+                <MudNavLink Typo="Typo.subtitle1" Class="pb-2" Style="font-weight: bold;" Color="Color.Primary"
+                    Href="@(string.Join(Environment.GetEnvironmentVariable("AZURE_STORAGE_BLOB_ENDPOINT") ,title))"
+                    aria-label="@title" Icon="@Icons.Custom.FileFormats.FileDocument">
+                    @title
+                    @fullPath
+                </MudNavLink>
             </MudTooltip>
             <!--<MudText Typo="Typo.subtitle1" Class="pb-2" Style="font-weight: bold;" Color="Color.Primary">@title</MudText>-->
             <MudText Typo="Typo.body1">@((MarkupString)content!)</MudText>

@@ -168,7 +168,10 @@ public class UpdatesController : Controller
 
             // Check for the spec version property.
             var version = eventData["specversion"]?.Value<string>();
-            if (!string.IsNullOrEmpty(version)) return true;
+            if (!string.IsNullOrEmpty(version))
+            {
+                return true;
+            }
         }
         catch (Exception e)
         {
