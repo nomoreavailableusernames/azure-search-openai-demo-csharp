@@ -17,7 +17,7 @@ using MinimalApi.Models;
 namespace MinimalApi.Controllers;
 
 [Route("api/[controller]")]
-public class UpdatesController : Controller
+public class EventGridController : Controller
 {
     #region Data Members
 
@@ -35,7 +35,7 @@ public class UpdatesController : Controller
 
     #region Constructors
 
-    public UpdatesController(IHubContext<GridEventsHub> gridEventsHubContext)
+    public EventGridController(IHubContext<GridEventsHub> gridEventsHubContext)
     {
         this._hubContext = gridEventsHubContext;
     }
@@ -109,7 +109,7 @@ public class UpdatesController : Controller
             gridEvent.Id,
             gridEvent.EventType,
             gridEvent.Subject,
-            gridEvent.EventTime.ToLongTimeString(),
+            gridEvent.Data?["EventTime"]?.ToString(),
             jsonContent.ToString());
 
         // Retrieve the validation code and echo back.
