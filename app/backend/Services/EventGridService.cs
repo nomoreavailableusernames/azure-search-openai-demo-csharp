@@ -8,20 +8,9 @@ public interface IEventGridService
 
 public class EventGridService : IEventGridService
 {
-    private readonly MainLayout _mainLayout;
-
-    public EventGridService(MainLayout mainLayout)
-    {
-        _mainLayout = mainLayout;
-    }
 
     public Task HandleEventAsync(EventGridEvent eventGridEvent)
     {
-        // Example: Check event type and trigger Snackbar
-        if (eventGridEvent.EventType == "YourEventType")
-        {
-            _mainLayout.ShowSnackbar();
-        }
         return Task.CompletedTask;
     }
 }

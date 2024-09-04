@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.Mvc;
 using MinimalApi.Hubs;
 using MinimalApi.Models;
+// Remove this using directive
 
 namespace MinimalApi.Controllers;
 
